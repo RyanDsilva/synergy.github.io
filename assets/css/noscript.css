@@ -25,10 +25,6 @@
 
 /* Intro */
 
-.preload-overlay {
-    display: none;
-}
-
 body.is-loading #intro {
     opacity: 1;
 }
