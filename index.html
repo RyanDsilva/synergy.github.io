@@ -12,11 +12,6 @@
     <meta name="author" content="Ryan Dsilva" />
     <link rel="shortcut icon" href="favicon.ico">
 
-    <script>
-        jQuery(window).load(function() {
-            jQuery(".preload-overlay").fadeOut(500);
-        });
-    </script>
 </head>
 
 <body class="is-loading">
@@ -202,6 +197,23 @@
     <script src="assets/js/skel.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
+
+    <script>
+        < script >
+            $(document).ready(function() {
+                //Preloader
+                $(window).load(function() {
+                    preloaderFadeOutTime = 500;
+
+                    function hidePreloader() {
+                        var preloader = $('.preload-overlay');
+                        preloader.fadeOut(preloaderFadeOutTime);
+                    }
+                    hidePreloader();
+                });
+            });
+
+    </script>
 
 
 </body>
