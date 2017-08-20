@@ -11,9 +11,16 @@
     <meta name="keywords" content="crce, non-technical, students, council, synergy, template, slider, scroll, header, animation javascript, depth, 3d, css" />
     <meta name="author" content="Ryan Dsilva" />
     <link rel="shortcut icon" href="favicon.ico">
+
+    <script>
+        jQuery(window).load(function() {
+            jQuery(".preload-overlay").fadeOut(500);
+        });
+    </script>
 </head>
 
 <body class="is-loading">
+    <div class="preload-overlay"></div>
 
     <!-- Wrapper -->
     <div id="wrapper" class="fade-in">
