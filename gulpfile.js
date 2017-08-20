@@ -3,6 +3,7 @@ var changed = require('gulp-changed');
 var imagemin = require('gulp-imagemin');
 var uglify = require('gulp-uglify');
 var minify = require('gulp-minify-css');
+var del = require('del');
 
 gulp.task('imagemin', function() {
    var imgSrc = 'images/*/*.+(png|jpg|gif)',
@@ -30,4 +31,8 @@ gulp.task('css', function(){
 });
 
 gulp.task('default',['js','css'],function(){
+});
+
+gulp.task('clean:build', function() {
+   return del.sync('build');
 });
