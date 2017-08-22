@@ -1,38 +1,50 @@
-var gulp = require('gulp');
-var changed = require('gulp-changed');
-var imagemin = require('gulp-imagemin');
-var uglify = require('gulp-uglify');
-var minify = require('gulp-minify-css');
-var del = require('del');
+var gulp        = require('gulp');  
+var minifyCSS   = require('gulp-clean-css');  
+var concat      = require('gulp-concat');  
+var uglify      = require('gulp-uglify');  
+var imagemin    = require('gulp-imagemin');  
+var rename      = require('gulp-rename');  
+var sass        = require('gulp-sass');  
 
-gulp.task('imagemin', function() {
-   var imgSrc = 'images/*/*.+(png|jpg|gif)',
-   imgDst = 'build/images';
-   
-   gulp.src(imgSrc)
-   .pipe(changed(imgDst))
-   .pipe(imagemin())
-   .pipe(gulp.dest(imgDst));
+//Change Folder paths
+
+gulp.task('styles',function(){  
+    var stylesSrc = [
+        './styles/development/scss/**/*.scss'
+    ];
+    return gulp.src(stylesSrc)
+        .pipe(sass())
+        .pipe(concat('dev.css'))
+        .pipe(gulp.dest('./styles/production/'))
+        .pipe(rename('prod.min.css'))
+        .pipe(minifyCSS())
+        .pipe(gulp.dest('./styles/production/'));
 });
 
-gulp.task('default',['imagemin'],function(){
+gulp.task('scripts',function(){  
+    var scriptSrc =[
+        './js/development/vendor/**/*.js',
+        './js/development/foundation/**/*.js',
+        './js/development/app.js'
+
+    ];
+    gulp.src(scriptSrc)
+        .pipe(concat('dev.js'))
+        .pipe(gulp.dest('./js/production/'))
+        .pipe(rename('prod.min.js')
+        .pipe(uglify())
+        .pipe(gulp.dest('./js/production/'));
 });
 
-gulp.task('js', function(){
-   gulp.src('assets/js/*.js')
-   .pipe(uglify())
-   .pipe(gulp.dest('build/scripts/'));
+gulp.task('images',function(){  
+    return gulp.src('./images/*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('./images'));
 });
 
-gulp.task('css', function(){
-   gulp.src('assets/css/*.css')
-   .pipe(minify())
-   .pipe(gulp.dest('build/styles/'));
+gulp.task('watch', function() {  
+    gulp.watch('./styles/development/**/*.scss', ['styles']);
+    gulp.watch('./js/development/**/*.js', ['scripts']);
 });
 
-gulp.task('default',['js','css'],function(){
-});
-
-gulp.task('clean:build', function() {
-   return del.sync('build');
-});
+gulp.task('default', ['styles','scripts','images']);
